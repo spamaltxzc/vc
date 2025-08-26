@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits, Events } from 'discord.js';
 import dotenv from 'dotenv';
-
+import express from 'express';
 dotenv.config();
 
 // Bot configuration
@@ -40,7 +40,7 @@ client.on(Events.MessageCreate, async (message) => {
             }
             
             // Send the notification message
-            await notificationChannel.send('@everyone new report');
+            await notificationChannel.send('<@&1364944237069598792> new report');
             console.log(`✅ Sent notification to channel: ${notificationChannel.name}`);
             
         } catch (error) {
