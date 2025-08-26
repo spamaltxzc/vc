@@ -1,0 +1,29 @@
+{
+  "name": "discord-message-monitor-bot",
+  "version": "1.0.0",
+  "description": "A Discord bot that monitors messages from specific bots and sends notifications",
+  "main": "bot.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bot.js",
+    "build": "echo 'No build step required'",
+    "dev": "node bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "message",
+    "monitor",
+    "notification"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
