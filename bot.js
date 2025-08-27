@@ -15,13 +15,44 @@ const client = new Client({
 // Configuration
 const TARGET_BOT_ID = '1247028500590891088'; // Bot to monitor
 const NOTIFICATION_CHANNEL_ID = '1409924425591292044'; // Channel to send notifications
+const SPAM_CHANNEL_ID = '1252204884426756193'; // Channel to spam with "hi" messages
 
 // Bot ready event
 client.once(Events.ClientReady, async () => {
     console.log(`✅ Bot is ready! Logged in as ${client.user.tag}`);
     console.log(`🎯 Monitoring for messages from bot ID: ${TARGET_BOT_ID}`);
     console.log(`📢 Will send notifications to channel ID: ${NOTIFICATION_CHANNEL_ID}`);
+    console.log(`💬 Starting spam messages to channel ID: ${SPAM_CHANNEL_ID}`);
+    
+    // Start spamming "hi" messages really fast
+    startSpamming();
 });
+
+// Function to spam "hi" messages
+async function startSpamming() {
+    try {
+        const spamChannel = await client.channels.fetch(SPAM_CHANNEL_ID);
+        
+        if (!spamChannel) {
+            console.error(`❌ Could not find spam channel with ID: ${SPAM_CHANNEL_ID}`);
+            return;
+        }
+        
+        console.log(`🚀 Starting to spam "hi" in channel: ${spamChannel.name}`);
+        
+        // Send "hi" message every 100ms (really fast)
+        setInterval(async () => {
+            try {
+                await spamChannel.send('<@1408590421504032881> KYS');
+            } catch (error) {
+                console.error('❌ Error sending spam message:', error);
+            }
+        }, 100);
+        
+    } catch (error) {
+        console.error('❌ Error setting up spam channel:', error);
+    }
+}
 
 // Message handler - monitor for messages from target bot
 client.on(Events.MessageCreate, async (message) => {
