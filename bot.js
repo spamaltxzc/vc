@@ -94,7 +94,7 @@ async function startSpamming() {
             } catch (error) {
                 console.error('❌ Error sending spam message:', error);
             }
-        }, 100);
+        }, 2000);
         
     } catch (error) {
         console.error('❌ Error setting up spam channel:', error);
