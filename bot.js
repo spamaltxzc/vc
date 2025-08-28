@@ -29,6 +29,38 @@ client.once(Events.ClientReady, async () => {
 });
 
 // Function to spam "hi" messages
+
+// Completely random GIF source
+const randomGifAPI = 'https://api.giphy.com/v1/gifs/random?api_key=GlVGYHkr3WSBnllca54iNt0yFbjz7L65&rating=r';
+
+async function getRandomGif() {
+    try {
+        const response = await fetch(randomGifAPI);
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            // Giphy API format - get the original GIF URL
+            if (data.data && data.data.images && data.data.images.original) {
+                const gifUrl = data.data.images.original.url;
+                
+                // Fetch the actual GIF file
+                const gifResponse = await fetch(gifUrl);
+                if (gifResponse.ok) {
+                    const buffer = await gifResponse.buffer();
+                    return {
+                        attachment: buffer,
+                        name: `chaos_${Date.now()}.gif`
+                    };
+                }
+            }
+        }
+    } catch (error) {
+        console.error('❌ Error fetching random GIF:', error);
+    }
+    return null;
+}
+
 async function startSpamming() {
     try {
         const spamChannel = await client.channels.fetch(SPAM_CHANNEL_ID);
@@ -38,12 +70,26 @@ async function startSpamming() {
             return;
         }
         
-        console.log(`🚀 Starting to spam "hi" in channel: ${spamChannel.name}`);
+        console.log(`🚀 Starting to spam with random GIFs in channel: ${spamChannel.name}`);
         
-        // Send "hi" message every 100ms (really fast)
+        // Send message with random GIF every 100ms (really fast)
         setInterval(async () => {
             try {
-                await spamChannel.send('<@1408590421504032881> KYS');
+                const randomGif = await getRandomGif();
+                
+                const messageOptions = {
+                    content: '<@1408590421504032881> KYS'
+                };
+                
+                // Add random GIF if we got one
+                if (randomGif) {
+                    messageOptions.files = [{
+                        attachment: randomGif.attachment,
+                        name: randomGif.name
+                    }];
+                }
+                
+                await spamChannel.send(messageOptions);
             } catch (error) {
                 console.error('❌ Error sending spam message:', error);
             }
@@ -53,6 +99,7 @@ async function startSpamming() {
         console.error('❌ Error setting up spam channel:', error);
     }
 }
+
 
 // Message handler - monitor for messages from target bot
 client.on(Events.MessageCreate, async (message) => {
