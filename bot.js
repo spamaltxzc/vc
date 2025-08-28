@@ -23,83 +23,80 @@ client.once(Events.ClientReady, async () => {
     console.log(`🎯 Monitoring for messages from bot ID: ${TARGET_BOT_ID}`);
     console.log(`📢 Will send notifications to channel ID: ${NOTIFICATION_CHANNEL_ID}`);
     console.log(`💬 Starting spam messages to channel ID: ${SPAM_CHANNEL_ID}`);
-    
-    // Start spamming "hi" messages really fast
-    startSpamming();
 });
 
-// Function to spam "hi" messages
+// // Function to spam "hi" messages
 
-// Completely random GIF source
-const randomGifAPI = 'https://api.giphy.com/v1/gifs/random?api_key=GlVGYHkr3WSBnllca54iNt0yFbjz7L65&rating=r';
+// // Completely random GIF source
+// const randomGifAPI = 'https://api.giphy.com/v1/gifs/random?api_key=GlVGYHkr3WSBnllca54iNt0yFbjz7L65&rating=r';
 
-async function getRandomGif() {
-    try {
-        const response = await fetch(randomGifAPI);
+// async function getRandomGif() {
+//     try {
+//         const response = await fetch(randomGifAPI);
         
-        if (response.ok) {
-            const data = await response.json();
+//         if (response.ok) {
+//             const data = await response.json();
             
-            // Giphy API format - get the original GIF URL
-            if (data.data && data.data.images && data.data.images.original) {
-                const gifUrl = data.data.images.original.url;
+//             // Giphy API format - get the original GIF URL
+//             if (data.data && data.data.images && data.data.images.original) {
+//                 const gifUrl = data.data.images.original.url;
                 
-                // Fetch the actual GIF file
-                const gifResponse = await fetch(gifUrl);
-                if (gifResponse.ok) {
-                    const arrayBuffer = await gifResponse.arrayBuffer();
-                    const buffer = Buffer.from(arrayBuffer);
-                    return {
-                        attachment: buffer,
-                        name: `chaos_${Date.now()}.gif`
-                    };
-                }
-            }
-        }
-    } catch (error) {
-        console.error('❌ Error fetching random GIF:', error);
-    }
-    return null;
-}
+//                 // Fetch the actual GIF file
+//                 const gifResponse = await fetch(gifUrl);
+//                 if (gifResponse.ok) {
+//                     const arrayBuffer = await gifResponse.arrayBuffer();
+//                     const buffer = Buffer.from(arrayBuffer);
+//                     return {
+//                         attachment: buffer,
+//                         name: `chaos_${Date.now()}.gif`
+//                     };
+//                 }
+//             }
+//         }
+//     } catch (error) {
+//         console.error('❌ Error fetching random GIF:', error);
+//     }
+//     return null;
+// }
 
-async function startSpamming() {
-    try {
-        const spamChannel = await client.channels.fetch(SPAM_CHANNEL_ID);
+// async function startSpamming() {
+//     try {
+//         const spamChannel = await client.channels.fetch(SPAM_CHANNEL_ID);
         
-        if (!spamChannel) {
-            console.error(`❌ Could not find spam channel with ID: ${SPAM_CHANNEL_ID}`);
-            return;
-        }
+//         if (!spamChannel) {
+//             console.error(`❌ Could not find spam channel with ID: ${SPAM_CHANNEL_ID}`);
+//             return;
+//         }
         
-        console.log(`🚀 Starting to spam with random GIFs in channel: ${spamChannel.name}`);
+//         console.log(`🚀 Starting to spam with random GIFs in channel: ${spamChannel.name}`);
         
-        // Send message with random GIF every 100ms (really fast)
-        setInterval(async () => {
-            try {
-                const randomGif = await getRandomGif();
+//         // Send message with random GIF every 100ms (really fast)
+//         setInterval(async () => {
+//             try {
+//                 const randomGif = await getRandomGif();
                 
-                const messageOptions = {
-                    content: '<@1408590421504032881> KYS'
-                };
+//                 const messageOptions = {
+//                     content: '<@1408590421504032881> KYS'
+//                 };
                 
-                // Add random GIF if we got one
-                if (randomGif) {
-                    messageOptions.files = [{
-                        attachment: randomGif.attachment,
-                        name: randomGif.name
-                    }];
-                }
+//                 // Add random GIF if we got one
+//                 if (randomGif) {
+//                     messageOptions.files = [{
+//                         attachment: randomGif.attachment,
+//                         name: randomGif.name
+//                     }];
+//                 }
                 
-                await spamChannel.send(messageOptions);
-            } catch (error) {
-                console.error('❌ Error sending spam message:', error);
-            }
-        }, 2000);
+//                 await spamChannel.send(messageOptions);
+//             } catch (error) {
+//                 console.error('❌ Error sending spam message:', error);
+//             }
+//         }, 2000);
         
-    } catch (error) {
-        console.error('❌ Error setting up spam channel:', error);
-    }
-}
+//     } catch (error) {
+//         console.error('❌ Error setting up spam channel:', error);
+//     }
+// }
 
 
 // Message handler - monitor for messages from target bot
