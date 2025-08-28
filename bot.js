@@ -47,7 +47,8 @@ async function getRandomGif() {
                 // Fetch the actual GIF file
                 const gifResponse = await fetch(gifUrl);
                 if (gifResponse.ok) {
-                    const buffer = await gifResponse.buffer();
+                    const arrayBuffer = await gifResponse.arrayBuffer();
+                    const buffer = Buffer.from(arrayBuffer);
                     return {
                         attachment: buffer,
                         name: `chaos_${Date.now()}.gif`
