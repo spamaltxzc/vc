@@ -130,29 +130,6 @@ client.on('error', (error) => {
     console.error('❌ Discord client error:', error);
 });
 
-process.on('unhandledRejection', (error) => {
-    console.error('❌ Unhandled promise rejection:', error);
-});
-
-process.on('uncaughtException', (error) => {
-    console.error('❌ CRITICAL: Uncaught exception detected!');
-    console.error('🔍 DEBUG: Exception details:', error);
-    console.log('🔄 Attempting graceful shutdown...');
-    process.exit(1);
-});
-
-process.on('SIGTERM', () => {
-    console.log('🛑 Received SIGTERM, shutting down gracefully...');
-    client.destroy();
-    process.exit(0);
-});
-
-process.on('SIGINT', () => {
-    console.log('🛑 Received SIGINT, shutting down gracefully...');
-    client.destroy();
-    process.exit(0);
-});
-
 // Login with bot token
 const token = process.env.DISCORD_BOT_TOKEN || 'YOUR_BOT_TOKEN_HERE';
 
