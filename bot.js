@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits, Events } from 'discord.js';
 import dotenv from 'dotenv';
+import express from 'express';
 dotenv.config();
 
 // Minimal bot configuration for the 1A timeout feature
